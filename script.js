@@ -6,7 +6,7 @@ var xmlns = "http://www.w3.org/2000/svg",
   selectAll = function(s) {
     return document.querySelectorAll(s);
   },
-    emojiArr = [ ' 📖 ' , ' 🤔 ' , ' 💡 ' , ' 😍 ' , ' 🚀 ' , ' 🤯 ' , ' 📊 ' , ' 🤓 ' ],
+    emojiArr = [ ' 😍 ' , ' 📖 ' , ' 🤔 ', ' 💡 ' , ' 😍 ' , ' 🚀 ' , ' 🤯 ' , ' 📊 ' , ' 🤓 ' ],
     hitColorArr = ['#111','#F7894A','#00BCF2','#F03A17','#00BCF2', '#000', '#8CBD18', '#333'],
     shadow = select('#shadow'),
     emojiContainer = select('#emojiContainer'),

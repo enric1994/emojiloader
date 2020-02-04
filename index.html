@@ -1,27 +1,185 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
+<script>
+  // Setup 
+  var emojis = [' 😍 ', ' 📖 ', ' 🤔 ', ' 💡 ', ' x ', ' 🚀 ', ' 🤯 ', ' 📊 ', ' 🤓 '];
+  var text = 'Loading...';
+  var url = 'https://github.com/enric1994/emojiloader';
+  var time = '3';
+  var background = '#ea93da';
+
+</script>
+
 <head>
-  <meta http-equiv="refresh" content="3;url=http://t2.desk.eu.ngrok.io/" />
+  <meta id="redirect" http-equiv="refresh" />
   <meta charset="UTF-8">
   <title>CodePen - Emoji Bounce </title>
-  <link rel="stylesheet" href="./style.css">
 
 </head>
+
+<script>
+
+  function changeBackground(color) {
+    document.body.style.background = color;
+  }
+
+  document.getElementById("redirect").setAttribute("content", time + ";url=" + url);
+  window.addEventListener("load", function () { changeBackground(background) });
+</script>
+
 <body>
-<!-- partial:index.partial.html -->
-<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
- <g id="emojiContainer">
-  <text id="emoji" x="50%" y="400"> 😍 </text>
-  </g>
-      
- <g id="shadow">
-  <!-- <rect  width="80" height="4" x="360" y="404" fill="#222" opacity="0.6" /> -->
-  <line x1="360" y1="404" x2="440" y2="404" stroke="#111" stroke-width="4" stroke-linecap="round"/>
-  </g>
-</svg>
-<!-- partial -->
+  <p class=loading_title>
+    <script type="text/javascript">document.write(text)</script>
+  </p>
+  <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <g id="emojiContainer">
+      <text id="emoji" x="50%" y="400">
+        <script type="text/javascript">document.write(emojis[0])</script> </text>
+    </g>
+
+    <g id="shadow">
+      <line x1="360" y1="404" x2="440" y2="404" stroke="#111" stroke-width="4" stroke-linecap="round" />
+    </g>
+  </svg>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js'></script>
-  <script  src="./script.js"></script>
+  <script>
+    var xmlns = "http://www.w3.org/2000/svg",
+      xlinkns = "http://www.w3.org/1999/xlink",
+      select = function (s) {
+        return document.querySelector(s);
+      },
+      selectAll = function (s) {
+        return document.querySelectorAll(s);
+      },
+      emojiArr = emojis,
+      hitColorArr = ['#111', '#F7894A', '#00BCF2', '#F03A17', '#00BCF2', '#000', '#8CBD18', '#333'],
+      shadow = select('#shadow'),
+      emojiContainer = select('#emojiContainer'),
+      hitLines = select('#hitLines'),
+      emoji = select('#emoji'),
+      count = 0,
+      scale = 4
+
+
+    TweenMax.set('svg', {
+      visibility: 'visible'
+    })
+    TweenMax.set(emojiContainer, {
+      transformOrigin: '50% 100%',
+      scale: scale
+    })
+    TweenMax.set([shadow], {
+      transformOrigin: '50% 50%'
+    })
+    TweenMax.set([shadow, emoji], {
+      transformOrigin: '50% 50%'
+    })
+
+    var hitTl = new TimelineMax();
+
+    hitTl.fromTo('#hitLines line', 0.2, {
+      drawSVG: '0% 0%'
+    }, {
+      drawSVG: '0% 50%',
+      ease: Linear.easeNone
+    })
+      .to('#hitLines line', 0.2, {
+        drawSVG: '60% 80%',
+        ease: Linear.easeNone
+      })
+      .to('#hitLines line', 0.4, {
+        drawSVG: '100% 100%',
+        ease: Sine.easeOut
+      })
+
+    var tl = new TimelineMax({ paused: false, repeat: -1 }).timeScale(3);
+    tl.from(emojiContainer, 0.7, {
+      y: -100,
+      ease: Power1.easeIn
+    })
+      .from(emojiContainer, 0.7, {
+        scaleX: scale / 1.2,
+        ease: Power3.easeIn
+      }, 0)
+      .from(shadow, 0.7, {
+        scaleX: 0.3,
+        alpha: 0.2,
+        ease: Power3.easeIn
+      }, '-=0.7')
+      .addCallback(function () { hitTl.play(0).timeScale(3); TweenMax.set(hitLines, { stroke: hitColorArr[count] }); })
+      .to(emojiContainer, 0.3, {
+        scaleY: scale / 2,
+
+        scaleX: scale + (scale / 4)
+      })
+      .addLabel('hit', '-=0.3')
+      .to(emojiContainer, 0.13, {
+        scaleY: scale,
+        scaleX: scale / 1.2,
+        ease: Expo.easeOut
+      }, '+=0.1')
+      .addCallback(onRepeat, '-=0.08')
+      .to(emojiContainer, 0.7, {
+        y: -100,
+        ease: Power1.easeOut
+      }, '-=0.1')
+      .to(shadow, 0.7, {
+        scaleX: 0.3,
+        alpha: 0.2,
+        ease: Power3.easeOut
+      }, '-=0.7')
+
+
+    TweenMax.to(emoji, tl.duration() / 1.5, {
+      rotation: '-=360',
+      repeat: -1,
+      ease: Linear.easeNone
+    })
+
+    function onRepeat() {
+      count = (count++ === emojiArr.length - 1) ? 0 : count;
+      emoji.textContent = emojiArr[count];
+
+    }
+  </script>
 
 </body>
+
+<style>
+  body {
+    overflow: hidden;
+    text-align: center;
+  }
+
+  body,
+  html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+
+  }
+
+  #emoji {
+    text-anchor: middle;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+  }
+
+  .loading_title {
+    font-size: 7vh;
+    font-family: 'Arial Black';
+    color: black;
+    font-weight: normal;
+  }
+</style>
+
 </html>

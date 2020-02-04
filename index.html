@@ -28,6 +28,42 @@
   window.addEventListener("load", function () { changeBackground(background) });
 </script>
 
+<style>
+  body {
+    overflow: hidden;
+    text-align: center;
+  }
+
+  body,
+  html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+
+  }
+
+  #emoji {
+    text-anchor: middle;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+  }
+
+  .loading_title {
+    font-size: 7vh;
+    font-family: 'Arial Black';
+    color: black;
+    font-weight: normal;
+  }
+</style>
+
 <body>
   <p class=loading_title>
     <script type="text/javascript">document.write(text)</script>
@@ -146,40 +182,6 @@
 
 </body>
 
-<style>
-  body {
-    overflow: hidden;
-    text-align: center;
-  }
 
-  body,
-  html {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-
-  svg {
-    width: 100%;
-    height: 100%;
-    visibility: hidden;
-
-  }
-
-  #emoji {
-    text-anchor: middle;
-    padding: 0;
-    margin: 0;
-    user-select: none;
-  }
-
-  .loading_title {
-    font-size: 7vh;
-    font-family: 'Arial Black';
-    color: black;
-    font-weight: normal;
-  }
-</style>
 
 </html>
